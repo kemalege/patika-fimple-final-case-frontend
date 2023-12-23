@@ -1,5 +1,6 @@
 export interface LoginInterface {
     userData: userData | null;
+    userToken: string;
     loginStatus: string;
 }
 

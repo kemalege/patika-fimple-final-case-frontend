@@ -3,9 +3,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { thunk, ThunkDispatch } from 'redux-thunk';
 import { combineReducers } from 'redux';
 import applicationReducer from '../features/application/applicationSlice';
+import authReducer from '../features/auth/authSlice';
 
 const reducers = {
-    application: applicationReducer
+    application: applicationReducer,
+    auth: authReducer,
 };
 
 const rootReducers = combineReducers({ ...reducers });
@@ -20,7 +22,7 @@ export const useAppDispatch = () => useDispatch<TypedDispatch<AppState>>();
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
 export const store = configureStore({
-    reducer: {...rootReducers},
+    reducer: rootReducers,
     middleware: () => new Tuple(thunk),
 });
 

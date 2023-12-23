@@ -8,4 +8,22 @@ const instance = axios.create({
   },
 });
 
+instance.interceptors.request.use(
+   (config) => {
+    if (config.url !== 'admin') {
+      const accessToken = JSON.parse(localStorage.getItem('userToken') ?? '');
+      if (accessToken === ''){
+        localStorage.removeItem('user');
+      }
+      if (accessToken) {
+        config.headers.Authorization = `Bearer: ${accessToken}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default instance;

@@ -5,8 +5,8 @@ import { LoginInterface, userResponse } from './authTypes';
 
 export const initialState: LoginInterface = {
     userData: null,
+    userToken: '',
     loginStatus: 'idle', // 'pending' | 'loading' | 'success' | 'failed'
-
 };
 
 export const login = createAsyncThunk(
@@ -19,8 +19,8 @@ export const login = createAsyncThunk(
   }
 );
 
-const applicationSlice = createSlice({
-  name: 'application',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     applicationReset: () => initialState,
@@ -34,17 +34,20 @@ const applicationSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loginStatus = 'success';
+        state.userToken = action.payload.data.access_token;
         const { data } = action.payload;
         state.userData = data.data;
+        localStorage.setItem('userToken', data.access_token);
       })
   },
 });
 
-export const selectApplications = (state: RootState) => state.application.pendingApplicationList;
+export const selectUser = (state: RootState) => state.auth.userData;
+export const selectUserToken = (state: RootState) => state.auth.userToken;
 
 
 export const {
     applicationReset
-} = applicationSlice.actions;
+} = authSlice.actions;
 
-export default applicationSlice.reducer;
+export default authSlice.reducer;
