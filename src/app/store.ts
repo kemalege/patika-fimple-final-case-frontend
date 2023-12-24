@@ -4,10 +4,12 @@ import { thunk, ThunkDispatch } from 'redux-thunk';
 import { combineReducers } from 'redux';
 import applicationReducer from '../features/application/applicationSlice';
 import authReducer from '../features/auth/authSlice';
+import navigationReducer from '../features/navigation/navigationSlice';
 
 const reducers = {
     application: applicationReducer,
     auth: authReducer,
+    navigation: navigationReducer
 };
 
 const rootReducers = combineReducers({ ...reducers });

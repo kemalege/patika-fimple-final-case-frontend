@@ -15,6 +15,8 @@ import ApplicationSuccesfull from './screens/ApplicationSuccesfull';
 import ViewApplication from './screens/ViewApplication';
 import HomeLayout from './layouts/HomeLayout';
 import RequireAuth from './layouts/RequireAuth';
+import { LoginAdmin } from './screens/LoginAdmin';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <RequireAuth/>,
+    element: <LoginAdmin />,
+  },
+  {
+    path: "/admin",
+    element: <RequireAuth />,
     children: [
       {
         path: "/admin/basvuru-listesi",
@@ -51,7 +57,8 @@ const router = createBrowserRouter([
         path: "/admin/basvuru/:basvuruNo",
         element: <ModifyApplication />,
       },
-    ]
+      
+    ],
   },
   
   
@@ -59,8 +66,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <ChakraProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </ChakraProvider>
   </React.StrictMode>,
 )
