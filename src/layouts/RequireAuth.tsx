@@ -1,6 +1,7 @@
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectUserToken } from "../features/auth/authSlice"
+import HomeLayout from "./HomeLayout"
 
 const RequireAuth = () => {
     const userToken = useSelector(selectUserToken)
@@ -8,7 +9,7 @@ const RequireAuth = () => {
     
     return (
         userToken
-            ? <Outlet />
+            ? <HomeLayout />
             : <Navigate to="/admin"  replace />
     )
 }

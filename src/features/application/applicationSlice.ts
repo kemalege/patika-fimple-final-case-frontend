@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../app/config/axiosConfig';
 import { RootState } from '../../app/store';
-import { ApiResponse, Application, ApplicationInterface } from './applicationTypes';
+import { ApiResponse, Application, ApplicationInterface } from '../../app/type';
 
 export const initialState: ApplicationInterface = {
   pendingApplicationList: [],

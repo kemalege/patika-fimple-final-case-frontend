@@ -1,16 +1,16 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { Portal, Box, useDisclosure } from '@chakra-ui/react';
+import { Outlet } from 'react-router-dom';
+import { Portal, Box, useDisclosure, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminNavbar from '../components/navbar/NavbarAdmin';
 import { selectActiveSubTab, selectActiveTab } from '../features/navigation/navigationSlice';
+import Sidebar from '../components/sidebar/Sidebar';
 
 const HomeLayout = () => {
   const [fixed] = useState(false);
   const activeTab = useSelector(selectActiveTab);
   const activeSubTab = useSelector(selectActiveSubTab);
   const { onOpen } = useDisclosure();
-  const location = useLocation();
   return (
     <>
       <Box>
@@ -27,6 +27,7 @@ const HomeLayout = () => {
           transitionProperty="top, bottom, width"
           transitionTimingFunction="linear, linear, ease"
         >
+          
           <Portal>
             <Box>
               <AdminNavbar
@@ -39,12 +40,13 @@ const HomeLayout = () => {
           </Portal>
 
           <Box mx="auto" p={{ base: '20px', md: '30px' }} pe="20px" pt="40px">
-            <Box
-              className={`${location.pathname === '/' ? 'h-full' : 'h-[92vh]'} w-full`}
-              pt={{ base: '65px' }}
+            <Flex
+              flexDir={{ base: 'column', md: 'row' }}
+              pt={{ base: '0px' }}
             >
+              <Sidebar />
               <Outlet />
-            </Box>
+            </Flex>
           </Box>
         </Box>
       </Box>

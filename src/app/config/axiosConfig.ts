@@ -10,8 +10,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
    (config) => {
-    if (config.url !== 'admin') {
-      const accessToken = JSON.parse(localStorage.getItem('userToken') ?? '');
+    if (config.url !== 'auth/admin') {
+      const accessToken = (localStorage.getItem('userToken') ?? '');
       if (accessToken === ''){
         localStorage.removeItem('user');
       }

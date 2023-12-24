@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../app/config/axiosConfig';
 import { RootState } from '../../app/store';
-import { LoginInterface, userResponse } from './authTypes';
+import { LoginInterface, userResponse } from '../../app/type';
 
 export const initialState: LoginInterface = {
     userData: null,
@@ -11,8 +11,8 @@ export const initialState: LoginInterface = {
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ username, password }: { username: string, password: string }) => {
-    const response = await axios.post<userResponse>('auth/login', { username, password });
+  async ({ userName, password }: { userName: string, password: string }) => {
+    const response = await axios.post<userResponse>('auth/login', { userName, password });
     return {
       data: response.data,
     };
@@ -24,7 +24,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     applicationReset: () => initialState,
-    
+    logout: (state) => {
+      state.userData = null;
+      state.userToken = '';
+      state.loginStatus = 'idle';
+      localStorage.removeItem('userToken');
+    },
     },
     
   extraReducers(builder) {
@@ -47,7 +52,7 @@ export const selectUserToken = (state: RootState) => state.auth.userToken;
 
 
 export const {
-    applicationReset
+    applicationReset, logout
 } = authSlice.actions;
 
 export default authSlice.reducer;

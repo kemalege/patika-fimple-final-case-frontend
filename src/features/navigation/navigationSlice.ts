@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { INavigation } from './navigationSliceTypes';
+import { INavigation } from '../../app/type';
 
 export const initialState: INavigation = {
     activeTab: 'Admin',

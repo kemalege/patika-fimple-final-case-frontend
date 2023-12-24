@@ -46,7 +46,7 @@ export default function AdminNavbar(props: {
         mx="auto"
         mt={secondaryMargin}
         pb="8px"
-        left={{ base: '12px', md: '30px', lg: '30px', xl: '30px' }}
+        left={{ base: '12px', md: '270px', lg: '270px', xl: '270px' }}
         px={{
           base: '15px',
         }}

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     element: <LoginAdmin />,
   },
   {
-    path: "/admin",
+    path: "/",
     element: <RequireAuth />,
     children: [
       {
