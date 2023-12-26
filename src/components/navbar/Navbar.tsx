@@ -1,6 +1,6 @@
 import { Box, Breadcrumb, BreadcrumbItem, Text, Flex, useColorModeValue } from '@chakra-ui/react';
 
-export default function AdminNavbar(props: {
+export default function Navbar(props: {
   secondary?: boolean;
   activeSubTab: string | boolean;
   activeTab: string;
@@ -11,11 +11,10 @@ export default function AdminNavbar(props: {
   const { secondary, activeTab, activeSubTab } = props;
   const mainText = useColorModeValue('#24262D', 'white');
   const secondaryText = useColorModeValue('#24262D', 'white');
-  const navbarPosition = 'fixed' as const;
   const navbarFilter = 'none';
   const navbarBackdrop = 'blur(20px)';
   const navbarShadow = 'none';
-  const navbarBg = useColorModeValue('rgba(244, 247, 254, 0.2)', 'rgba(36, 38, 45, 0.2)');
+  const navbarBg = useColorModeValue('rgba(162, 179, 218, 0.2)', 'rgba(36, 38, 45, 0.2)');
   const navbarBorder = 'transparent';
   const secondaryMargin = '0px';
   const gap = '0px';
@@ -23,34 +22,29 @@ export default function AdminNavbar(props: {
   return (
     <>
       <Box
-        position={navbarPosition}
         boxShadow={navbarShadow}
         bg={navbarBg}
         borderColor={navbarBorder}
         filter={navbarFilter}
         backdropFilter={navbarBackdrop}
-        backgroundPosition="center"
-        backgroundSize="cover"
         borderRadius="16px"
         borderWidth="1.5px"
         borderStyle="solid"
+        alignItems="center"
         transitionDelay="0s, 0s, 0s, 0s"
         transitionDuration=" 0.25s, 0.25s, 0.25s, 0s"
         transition-property="box-shadow, background-color, filter, border"
         transitionTimingFunction="linear, linear, linear, linear"
-        alignItems="center"
         display={secondary === true ? 'block' : 'flex'}
-        minH="75px"
+        minH="50px"
         justifyContent={{ xl: 'start' }}
         lineHeight="27.6px"
-        mx="auto"
         mt={secondaryMargin}
-        pb="8px"
-        left={{ base: '12px', md: '270px', lg: '270px', xl: '270px' }}
+        pb="12px"
+        pt="6px"
         px={{
-          base: '15px',
+          base: '16px',
         }}
-        top={{ base: '12px', md: '16px', xl: '18px' }}
         w={{
           base: 'calc(100vw - 6%)',
           md: 'calc(100vw - 8%)',

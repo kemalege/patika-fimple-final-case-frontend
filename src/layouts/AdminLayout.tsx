@@ -7,8 +7,9 @@ import {
   selectActiveSubTab,
   selectActiveTab,
 } from "../features/navigation/navigationSlice";
+import Sidebar from "../components/sidebar/Sidebar";
 
-const HomeLayout = () => {
+const AdminLayout = () => {
   const [fixed] = useState(false);
   const activeTab = useSelector(selectActiveTab);
   const activeSubTab = useSelector(selectActiveSubTab);
@@ -16,7 +17,7 @@ const HomeLayout = () => {
   return (
     <>
       <Flex flexDirection={{ base: "column", md: "column", lg: "column" }}>
-        <Box p={{ base: "16px", md: "24px" }}  >
+        <Box p={{ base: "16px", md: "24px" }} >
           <Flex flexDir={{ base: "column", md: "row" }} pt={{ base: "0px" }}>
             <Navbar
               onOpen={onOpen}
@@ -26,10 +27,14 @@ const HomeLayout = () => {
             />
           </Flex>
         </Box>
-        <Outlet />
+        <Flex flexDir={{ base: "column", md: "row" }}>
+            <Sidebar/>
+            <Outlet />
+        </Flex>
+        
       </Flex>
     </>
   );
 };
 
-export default HomeLayout;
+export default AdminLayout;

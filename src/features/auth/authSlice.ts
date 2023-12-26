@@ -1,22 +1,26 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, } from '@reduxjs/toolkit';
 import axios from '../../app/config/axiosConfig';
 import { RootState } from '../../app/store';
 import { LoginInterface, userResponse } from '../../app/type';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const initialState: LoginInterface = {
     userData: null,
     userToken: '',
     loginStatus: 'idle', // 'pending' | 'loading' | 'success' | 'failed'
+    loginErrorMessage: '',
 };
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ userName, password }: { userName: string, password: string }) => {
-    const response = await axios.post<userResponse>('auth/login', { userName, password });
-    return {
-      data: response.data,
-    };
-  }
+  ({ userName, password }: { userName: string, password: string }, thunkApi) =>
+    axios.post<userResponse>('auth/login', { userName, password })
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        return thunkApi.rejectWithValue(error.response.data);
+      })
 );
 
 const authSlice = createSlice({
@@ -37,18 +41,26 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.loginStatus = 'loading';
       })
+      .addCase(login.rejected, (state, action) => {
+        state.loginStatus = 'failed';
+        if (action.payload){
+          state.loginErrorMessage = (action.payload as { message: string }).message;
+        }
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.loginStatus = 'success';
-        state.userToken = action.payload.data.access_token;
-        const { data } = action.payload;
-        state.userData = data.data;
-        localStorage.setItem('userToken', data.access_token);
-      })
+        state.userToken = action.payload.access_token;
+        const { data, access_token } = action.payload;
+        state.userData = data;
+        localStorage.setItem('userToken', access_token );
+      }) 
   },
 });
 
-export const selectUser = (state: RootState) => state.auth.userData;
+export const selectUser = (state: RootState) => state.auth.userData; 
+export const selectLoginStatus = (state: RootState) => state.auth.loginStatus; 
 export const selectUserToken = (state: RootState) => state.auth.userToken;
+export const selectLoginErrorMessage = (state: RootState) => state.auth.loginErrorMessage;
 
 
 export const {

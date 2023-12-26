@@ -44,6 +44,7 @@ export interface LoginInterface {
     userData: userData | null;
     userToken: string;
     loginStatus: string;
+    loginErrorMessage: string;
 }
 
 export interface userResponse {

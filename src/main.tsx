@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from './app/store';
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import NewApplication from './screens/NewApplication';
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <HomeLayout/>,
     children: [
+      {
+        path: "/",
+        element: <Navigate to="/basvuru-olustur" />,
+      },
       {
         path: "/basvuru-olustur",
         element: <NewApplication/>,

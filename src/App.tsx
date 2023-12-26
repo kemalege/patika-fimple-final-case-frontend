@@ -1,7 +1,12 @@
+import { useEffect } from 'react'
 import './App.css'
 
 const App = () => {
+  
+  useEffect(() => {
 
+  }, [])
+  
   return (
     <>
       
