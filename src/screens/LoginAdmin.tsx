@@ -19,18 +19,22 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { TLoginSchema, loginSchema } from '../library/types'
-import { login, selectLoginErrorMessage, selectLoginStatus } from '../features/auth/authSlice'
+import { login, selectLoginStatus } from '../features/auth/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch } from '../app/store'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { setActiveTab } from '../features/navigation/navigationSlice'
 
 export const LoginAdmin = () => {
 
   const appDispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const loginReqStatus = useSelector(selectLoginStatus)
+  useEffect(() => {dispatch(setActiveTab('Admin', 'Giriş Yap')); }, [])
+
+  const loginRequestStatus = useSelector(selectLoginStatus)
   const [loginErrorMessage, setLoginErrorMessage] = useState<string | null>(null)
 
   const location = useLocation();
@@ -48,18 +52,15 @@ export const LoginAdmin = () => {
   const { isOpen, onToggle } = useDisclosure()
 
   const onSubmit = async (data: TLoginSchema) => {
-    try {
       const { userName, password } = data;
-      await appDispatch(login({ userName, password })).unwrap();
-      navigate(from);
-    } catch (error: any) {
-        if(!error.message){
-          setLoginErrorMessage('Bir hata oluştu. Lütfen tekrar deneyiniz.')
-        }else{
-          setLoginErrorMessage(error.message);
+      try {
+        const response = await appDispatch(login({ userName, password })).unwrap();
+        if (response.success){
+          navigate(from);
         }
-      console.log(error);
-    }
+      } catch (error: any) {
+        setLoginErrorMessage(error.message);
+      }
     reset();
   };
 
@@ -129,7 +130,7 @@ export const LoginAdmin = () => {
         </FormControl>
             </Stack>
             <Stack spacing="6">
-              <Button isLoading={loginReqStatus === 'loading'} colorScheme='green' type='submit'>Sign in</Button>
+              <Button isLoading={loginRequestStatus === 'loading'} colorScheme='green' type='submit'>Sign in</Button>
               <HStack>   
               </HStack>
             </Stack>

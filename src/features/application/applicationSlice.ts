@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../app/config/axiosConfig';
 import { RootState } from '../../app/store';
-import { ApiResponse, Application, ApplicationInterface } from '../../app/type';
+import { ApiResponse, Application, ApplicationForm, ApplicationInterface, IError } from '../../app/type';
 
 export const initialState: ApplicationInterface = {
   pendingApplicationList: [],
@@ -12,6 +12,7 @@ export const initialState: ApplicationInterface = {
 
   applicationByCode: null,
   applicationByCodeStatus: 'idle',
+  applicationByCodeError: null,
 
   addAnswerToApplication: null,
   addAnswerToApplicationStatus: 'idle',
@@ -32,24 +33,24 @@ export const getPendingApplications = createAsyncThunk(
   }
 );
 
-export const getApplicatonByCode = createAsyncThunk(
-  'application/getApplicatonByCode',
-  async (code) => {
-    const response = await axios.get<ApiResponse<Application>>(`application/getApplicatonByCode/${code}`);
-    return {
-      data: response.data,
-    };
+export const getApplicationByCode = createAsyncThunk(
+  'application/getApplicationByCode',
+  async ({code}:{code:string}, {rejectWithValue}) => {
+    return await axios.get<ApiResponse<Application>>(`application/${code}`)
+    .then(response => response.data)
+      .catch(error => {
+        return rejectWithValue(error.response.data)
+      });
   }
 );
 
 // ----------------- Apply To New Application -----------------
 export const applyToNewApplication = createAsyncThunk(
-  'application/applyToNewApplication',
-  async (applicationBody) => {
-    const response = await axios.post<ApiResponse<Application>>('application/applyToNewApplication', applicationBody);
-    return {
-      data: response.data,
-    };
+  'application/apply',
+  async (applicationBody: ApplicationForm) => {
+    const response = await axios
+      .post<ApiResponse<Application>>('application/apply', applicationBody)
+      return response.data;
   }
 );
 
@@ -100,17 +101,23 @@ const applicationSlice = createSlice({
       })
       .addCase(applyToNewApplication.fulfilled, (state, action) => {
         state.applyToNewApplicationStatus = 'success';
-        const { data } = action.payload;
-        state.newApplication = data.data;
+        state.newApplication = action.payload.data;
+      })
+      .addCase(applyToNewApplication.rejected, (state) => {
+        state.applyToNewApplicationStatus = 'failed';
       })
       // ----------------- Get Application By Code  -----------------
-      .addCase(getApplicatonByCode.pending, (state) => {
+      .addCase(getApplicationByCode.pending, (state) => {
         state.applicationByCodeStatus = 'loading';
       })
-      .addCase(getApplicatonByCode.fulfilled, (state, action) => {
+      .addCase(getApplicationByCode.fulfilled, (state, action) => {
         state.applicationByCodeStatus = 'success';
         const { data } = action.payload;
-        state.applicationByCode = data.data;
+        state.applicationByCode = data
+      })
+      .addCase(getApplicationByCode.rejected, (state, action) => {
+        state.applicationByCodeStatus = 'failed';
+        state.applicationByCodeError = action.payload as IError;
       })
        // ----------------- Add Answer to Application  -----------------
       .addCase(addAnswerToApplication.pending, (state) => {
@@ -139,6 +146,7 @@ export const selectNewApplication = (state: RootState) => state.application.newA
 export const selectApplyToNewApplicationStatus = (state: RootState) => state.application.applyToNewApplicationStatus;
 export const selectApplicationByCode = (state: RootState) => state.application.applicationByCode;
 export const selectApplicationByCodeStatus = (state: RootState) => state.application.applicationByCodeStatus;
+export const selectApplicationByCodeError = (state: RootState) => state.application.applicationByCodeError;
 export const selectAddAnswerToApplication = (state: RootState) => state.application.addAnswerToApplication;
 export const selectAddAnswerToApplicationStatus = (state: RootState) => state.application.addAnswerToApplicationStatus;
 export const selectAdjustApplicationStatus = (state: RootState) => state.application.adjustApplicationStatus;

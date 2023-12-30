@@ -9,6 +9,7 @@ export interface ApplicationInterface {
 
   applicationByCode: Application | null,
   applicationByCodeStatus: Status
+  applicationByCodeError: IError | null
 
   addAnswerToApplication: Application | null,
   addAnswerToApplicationStatus: Status
@@ -22,17 +23,31 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export interface IError {
+  message: string;
+  code: number;
+}
 export interface Application {
   _id: string;
   status: string;
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   age: number;
   identity: number;
+  applicationReason: string;
   answer: any[];
   code: string;
   createdAt: string;
   __v: number;
+}
+
+export interface ApplicationForm {
+  firstName: string;
+  lastName: string;
+  age: number;
+  identity: string;
+  address: string;
+  applicationReason: string;
 }
 
 export interface INavigation {

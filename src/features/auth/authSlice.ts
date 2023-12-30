@@ -13,14 +13,14 @@ export const initialState: LoginInterface = {
 
 export const login = createAsyncThunk(
   'auth/login',
-  ({ userName, password }: { userName: string, password: string }, thunkApi) =>
-    axios.post<userResponse>('auth/login', { userName, password })
-      .then(response => {
-        return response.data;
-      })
+  async({ userName, password}:  { userName: string, password: string }, { rejectWithValue }) => {
+    return axios.post<userResponse>('auth/login', { userName, password })
+      .then(response => response.data)
       .catch(error => {
-        return thunkApi.rejectWithValue(error.response.data);
-      })
+        return rejectWithValue(error.response.data)
+      });
+  }
+      
 );
 
 const authSlice = createSlice({
@@ -41,11 +41,8 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.loginStatus = 'loading';
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.loginStatus = 'failed';
-        if (action.payload){
-          state.loginErrorMessage = (action.payload as { message: string }).message;
-        }
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loginStatus = 'success';
