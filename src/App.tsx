@@ -1,15 +1,70 @@
-import { useEffect } from 'react'
-import './App.css'
+import {createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import NewApplication from './screens/NewApplication';
+import PendingApplicationList from './screens/PendingApplicationList';
+import ModifyApplication from './screens/ModifyApplication';
+import CheckApplicationStatus from './screens/CheckApplicationStatus';
+import ApplicationSuccesfull from './screens/ApplicationSuccesfull';
+import ViewApplication from './screens/ViewApplication';
+import HomeLayout from './layouts/HomeLayout';
+import RequireAuth from './layouts/RequireAuth';
+import { LoginAdmin } from './screens/LoginAdmin';
+import ThemeSwitcher from './components/ThemeSwitcher';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout/>,
+    children: [
+      {
+        path: "/",
+        element: <Navigate to="/basvuru-olustur" />,
+      },
+      {
+        path: "/basvuru-olustur",
+        element: <NewApplication/>,
+      },
+      {
+        path: "/basvuru-sorgula",
+        element: <CheckApplicationStatus/>,
+      },
+      {
+        path: "/basvuru-basarili",
+        element: <ApplicationSuccesfull/>,
+      },
+      {
+        path: "/basvuru/:basvuruNo",
+        element: <ViewApplication />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <LoginAdmin />,
+  },
+  {
+    path: "/",
+    element: <RequireAuth />,
+    children: [
+      {
+        path: "/admin/basvuru-listesi",
+        element: <PendingApplicationList />,
+      },
+      {
+        path: "/admin/basvuru/:basvuruNo",
+        element: <ModifyApplication />,
+      },
+      
+    ],
+  },
+]);
 
 const App = () => {
-  
-  useEffect(() => {
 
-  }, [])
   
   return (
-    <>
-      
+    <>  
+        <ThemeSwitcher />
+        <RouterProvider router={router} />
     </>
   )
 }

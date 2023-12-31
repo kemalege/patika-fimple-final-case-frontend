@@ -4,19 +4,12 @@ import { setActiveTab } from "../features/navigation/navigationSlice";
 import { Alert, AlertIcon, Box, Card, CardBody, CardHeader, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { getApplicationByCode, selectNewApplication } from "../features/application/applicationSlice";
 import { useAppDispatch } from "../app/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { formatDateTime } from "../utils/DateTimeFormatter";
 
 const ApplicationSuccesfull = () => {
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const applicationData = useSelector(selectNewApplication)
-
-  // console.log(applicationData)
- 
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  console.log(location)
 
   useEffect(() => {
     dispatch(setActiveTab("", "Başvuru Başarılı"));
@@ -32,15 +25,6 @@ const ApplicationSuccesfull = () => {
       }
     })();
   }, []);
-
-
-  const formatDateTime = (dateTime: string) => {
-    const date = new Date(dateTime);
-    const formattedDate = date.toLocaleDateString();
-    const formattedTime = date.toLocaleTimeString();
-
-    return `${formattedDate} ${formattedTime}`;
-  };
 
   return (
     <Card p={{ base: "4", md: "8" }} m={{ base: "4", md: "8" }}>

@@ -15,7 +15,7 @@ const HomeLayout = () => {
   const { onOpen } = useDisclosure();
   return (
     <>
-      <Flex flexDirection={{ base: "column", md: "column", lg: "column" }}>
+      <Flex flexDirection={{ base: "column", md: "column", lg: "column" }} >
         <Box p={{ base: "16px", md: "24px" }}  >
           <Flex flexDir={{ base: "column", md: "row" }} pt={{ base: "0px" }}>
             <Navbar

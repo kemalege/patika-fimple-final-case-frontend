@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../features/navigation/navigationSlice";
-import { Alert, AlertIcon, Card, CardBody, CardHeader, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Alert, AlertIcon, Card, CardBody, CardHeader, CircularProgress, Heading, Spinner, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { getApplicationByCode, selectApplicationByCode, selectApplicationByCodeStatus } from "../features/application/applicationSlice";
 import { useAppDispatch } from "../app/store";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -34,11 +34,6 @@ const CheckApplicationStatus = () => {
   
   const onSearchByCode = async (data: TSearchApplicationByCode) => {
     const { code } = data;
-    try {
-      const response = await appDispatch(getApplicationByCode({code})).unwrap();
-    } catch (error: any) {
-      console.log(error)
-    }
     navigate('/basvuru/'+code);
     reset();
 };
@@ -47,7 +42,7 @@ const CheckApplicationStatus = () => {
     <form onSubmit={handleSubmit(onSearchByCode)}>
       <Card p={{ base: "4", md: "8" }} m={{ base: "4", md: "8" }} >
         <CardBody display={"flex"} justifyContent={'center'} >
-          <div className="flex-row inset-x-0 j">
+          <div className="flex-row inset-x-0">
             <h1 className="flex text-lg md:text-xl lg:text-2xl text-neutal-400 font-bold justify-start">Başvuru Sorgula</h1>
             <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">Daha önce oluşturduğunuz başvurunuzu başvuru kodu ile sorgulayabilirsiniz.</h3>
             <div className="flex flex-col w-[70vw]">
@@ -58,9 +53,20 @@ const CheckApplicationStatus = () => {
                       name="code"
                       type="text"
                       placeholder="Başvuru kodu giriniz"
-                      className="flex justify-start w-full py-3 pl-5 outline-none shadow-lg rounded-l-lg"/>
-                      
-                      <button className="flex rounded-r-lg items-center justify-center w-16 bg-chakra-green-400 text-white shadow-lg"><IoSearch /></button>
+                      className="flex justify-start w-fit py-3 pl-5 outline-none shadow-lg rounded-l-lg"/>
+                      <button className="flex rounded-r-lg items-center justify-center w-16 bg-chakra-green-400 text-white shadow-lg">
+                        {searchByCodeRequestStatus === "loading" ? (
+                          <Spinner
+                            thickness='2px'
+                            speed='0.65s'
+                            emptyColor='gray.300'
+                            color='white'
+                            size='sm'
+                          />
+                        ) : (
+                          <IoSearch />
+                        )}
+                      </button>
                   </div>
                   {errors.code && (
                           <p className="text-red-500">{`*${errors.code.message}`}</p>

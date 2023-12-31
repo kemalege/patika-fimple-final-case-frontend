@@ -35,7 +35,7 @@ export interface Application {
   age: number;
   identity: number;
   applicationReason: string;
-  answer: any[];
+  answers: any[];
   code: string;
   createdAt: string;
   __v: number;
