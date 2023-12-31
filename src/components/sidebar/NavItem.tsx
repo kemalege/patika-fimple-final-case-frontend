@@ -4,6 +4,7 @@ import {
     Text,
     Icon,
     Box,
+    useColorModeValue,
 } from '@chakra-ui/react'
 
 
@@ -16,6 +17,9 @@ export interface NavItemProps {
 }
 
 export default function NavItem({ icon, title, active, onClick }: NavItemProps) {
+
+    const activeBg = useColorModeValue('gray.200', 'gray.700')
+
     return (
         <Flex
             mt={0}
@@ -25,7 +29,7 @@ export default function NavItem({ icon, title, active, onClick }: NavItemProps) 
             <Box
                 onClick={onClick}
                 cursor="pointer"
-                backgroundColor={active ? "#AEC8CA" : ""}
+                backgroundColor={active ? activeBg : ""}
                 p={3}
                 borderRadius={8}
                 _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}

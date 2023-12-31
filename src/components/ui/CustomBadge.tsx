@@ -18,6 +18,6 @@ const statusObject: statusObject = {
     }
 };
 
-export const CustomBadge = (status: string) => {
+export const CustomBadge = ({status}: {status: string}) => {
     return <span className={'inline-flex items-center rounded-md ' + statusObject[status].color}>{statusObject[status].tag}</span>;
 };

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000',
-  timeout: 18000,
+  baseURL: 'https://patika-fimple-final-case-backend.vercel.app',
   headers: {
     'Content-Type': 'application/json',
   },

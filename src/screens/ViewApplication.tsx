@@ -1,6 +1,6 @@
 import { getApplicationByCode, selectApplicationByCode, selectApplicationByCodeError, selectApplicationByCodeStatus } from '../features/application/applicationSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Card, CardBody, Container, Flex, Heading, Text, useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, Box, Card, CardBody, Container, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react';
 import {formatDayAndMonth } from '../utils/DateTimeFormatter';
 import { CustomBadge } from '../components/ui/CustomBadge';
 import { setActiveTab } from '../features/navigation/navigationSlice';
@@ -52,7 +52,7 @@ const ViewApplication = () => {
                       <Text color="gray">{applicationByCode?.createdAt && formatDayAndMonth(applicationByCode?.createdAt)}</Text>
                   </Flex>
               </Flex>
-              {applicationByCode?.status && CustomBadge(applicationByCode?.status)}
+              {applicationByCode?.status && <CustomBadge status={applicationByCode?.status}/>}
             </Flex>
             <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">{applicationByCode?.applicationReason}Daha önce oluşturduğunuz başvurunuzu başvuru kodu ile sorgulayabilirsiniz.</h3>
            

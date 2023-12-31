@@ -28,6 +28,7 @@ export interface IError {
   code: number;
 }
 export interface Application {
+  [key: string]: any;
   _id: string;
   status: string;
   firstName: string;
