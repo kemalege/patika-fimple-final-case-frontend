@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import { Box, useDisclosure, Flex } from "@chakra-ui/react";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../components/navbar/Navbar";
 import {
@@ -9,7 +8,6 @@ import {
 } from "../features/navigation/navigationSlice";
 
 const HomeLayout = () => {
-  const [fixed] = useState(false);
   const activeTab = useSelector(selectActiveTab);
   const activeSubTab = useSelector(selectActiveSubTab);
   const { onOpen } = useDisclosure();
@@ -22,7 +20,6 @@ const HomeLayout = () => {
               onOpen={onOpen}
               activeTab={activeTab}
               activeSubTab={activeSubTab}
-              fixed={fixed}
             />
           </Flex>
         </Box>

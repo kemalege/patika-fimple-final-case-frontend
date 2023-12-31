@@ -29,7 +29,6 @@ export default function NavHoverBox({ title, icon }: NavHoverBoxProps) {
                 flexDir="column"
                 alignItems="center"
                 justify="center"
-                backgroundColor="#82AAAD"
                 borderRadius="10px"
                 color="#fff"
                 textAlign="center"

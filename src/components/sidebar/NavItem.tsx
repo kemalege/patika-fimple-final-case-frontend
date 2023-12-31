@@ -18,7 +18,8 @@ export interface NavItemProps {
 
 export default function NavItem({ icon, title, active, onClick }: NavItemProps) {
 
-    const activeBg = useColorModeValue('gray.200', 'gray.700')
+    const bgActive = useColorModeValue('gray.200', 'gray.700')
+    const bgHover = useColorModeValue('gray.300', 'gray.600')
 
     return (
         <Flex
@@ -29,10 +30,10 @@ export default function NavItem({ icon, title, active, onClick }: NavItemProps) 
             <Box
                 onClick={onClick}
                 cursor="pointer"
-                backgroundColor={active ? activeBg : ""}
+                backgroundColor={active ? bgActive : ""}
                 p={3}
                 borderRadius={8}
-                _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
+                _hover={{ textDecor: 'none', backgroundColor: bgHover }}
                 
             >
                 <Flex alignItems={'center'}>

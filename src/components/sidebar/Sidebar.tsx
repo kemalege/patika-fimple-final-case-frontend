@@ -3,6 +3,7 @@ import {
     Text,
     Divider,
     Avatar,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { MdOutlineFormatListBulleted } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
@@ -14,17 +15,17 @@ import { logout } from '../../features/auth/authSlice';
 export default function Sidebar() {
 
     const dispatch = useDispatch()
+    const MenuBg = useColorModeValue('white', 'gray.800')
+
     return (
         <Flex
-            left="5"
+            position="sticky"
+            top="20"
+            zIndex="sticky"
+            backgroundColor={MenuBg}
             h={{md: "80vh", lg: "80vh" }}
             w={{ base: "100vw", md: "240px", lg: "240px" }}
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
-            borderRadius={{
-                base: "15px",
-                md: "30px",
-                lg: "30px"
-            }}
             flexDir={{ base: "row", md: "column", lg: "column" }}
             justifyContent="space-between"
             align={{ base: "center", md: "center", lg: "flex-start" }}

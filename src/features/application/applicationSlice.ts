@@ -25,11 +25,13 @@ export const initialState: ApplicationInterface = {
 // ----------------- Get Pending Application List  -----------------
 export const getPendingApplications = createAsyncThunk(
   'application/getPendingApplications',
-  async () => {
-    const response = await axios.get<ApiResponse<Application[]>>('application/pendingApplications');
-    return {
-      data: response.data,
-    };
+  async (_, { rejectWithValue }) => {
+    return await axios
+      .get<ApiResponse<Application[]>>('application/pendingApplications')
+      .then(response => response.data)
+      .catch(error => {
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
@@ -93,7 +95,7 @@ const applicationSlice = createSlice({
       .addCase(getPendingApplications.fulfilled, (state, action) => {
         state.pendingApplicationStatus = 'success';
         const { data } = action.payload;
-        state.pendingApplicationList = data.data;
+        state.pendingApplicationList = data
       })
       // ----------------- Apply To New Application  -----------------
       .addCase(applyToNewApplication.pending, (state) => {

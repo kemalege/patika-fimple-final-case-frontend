@@ -25,7 +25,7 @@ import {
               <Tr key={data._id}>
                 {columns?.map((column : any) => (
                     <Td key={column.field}>
-                        {column.cellRenderer ? column.cellRenderer(data.status) : column.valueFormatter ? column.valueFormatter(data[column.field]) : data[column.field]}
+                        {column.cellRenderer ? column.cellRenderer(data) : column.valueFormatter ? column.valueFormatter(data[column.field]) : data[column.field]}
                     </Td>
                 ))}
               </Tr>

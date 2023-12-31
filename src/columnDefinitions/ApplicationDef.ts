@@ -5,7 +5,7 @@ import { formatDateTime } from "../utils/DateTimeFormatter";
 interface ApplicationColumn {
     field: string;
     header: string;
-    cellRenderer?: (params: string) => JSX.Element;
+    cellRenderer?: (params: any) => JSX.Element;
     valueFormatter?: (params: string) => string;
 }
 

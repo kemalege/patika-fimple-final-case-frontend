@@ -4,7 +4,6 @@ export default function Navbar(props: {
   secondary?: boolean;
   activeSubTab: string | boolean;
   activeTab: string;
-  fixed: boolean;
   onOpen: (...args: any[]) => any;
 }) {
 
@@ -25,6 +24,9 @@ export default function Navbar(props: {
         boxShadow={navbarShadow}
         bg={navbarBg}
         borderColor={navbarBorder}
+        position="sticky"
+        top="0"
+        zIndex="sticky"
         filter={navbarFilter}
         backdropFilter={navbarBackdrop}
         borderRadius="16px"

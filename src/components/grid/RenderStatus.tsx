@@ -1,8 +1,8 @@
 import { CustomBadge } from "../ui/CustomBadge"
 
-const RenderStatus = (status: string) => {
+const RenderStatus = (data: any) => {
   return (
-    <CustomBadge status={status}/>
+    <CustomBadge status={data.status}/>
   )
 }
 
