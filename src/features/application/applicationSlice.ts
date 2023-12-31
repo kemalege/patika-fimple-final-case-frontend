@@ -140,7 +140,7 @@ const applicationSlice = createSlice({
   },
 });
 
-export const selectApplications = (state: RootState) => state.application.pendingApplicationList;
+export const selectPendingApplications = (state: RootState) => state.application.pendingApplicationList;
 export const selectPendingApplicationStatus = (state: RootState) => state.application.pendingApplicationStatus;
 export const selectNewApplication = (state: RootState) => state.application.newApplication;
 export const selectApplyToNewApplicationStatus = (state: RootState) => state.application.applyToNewApplicationStatus;

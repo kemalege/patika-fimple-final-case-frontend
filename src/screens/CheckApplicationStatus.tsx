@@ -36,7 +36,7 @@ const CheckApplicationStatus = () => {
     const { code } = data;
     navigate('/basvuru/'+code);
     reset();
-};
+  };
 
   return (
     <form onSubmit={handleSubmit(onSearchByCode)}>
