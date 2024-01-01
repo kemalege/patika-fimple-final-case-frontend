@@ -94,7 +94,7 @@ const ModifyApplication = () => {
       </Box>
       <Card p={{ base: "4" }} m={{ base: "4" }}>
         <CardBody display={"flex"} w={"full"} >
-          <div className="inset-x-0 max-w-full">
+          <div className="inset-x-0 w-full">
             <h1 className="flex text-lg md:text-xl lg:text-2xl text-neutal-400 font-bold justify-start">{applicationByCode?.applicationReason}</h1>
             <Flex mt={{ base: "none", md: "4", lg: "4" }} justifyContent={'space-between'} align="center">
               <Flex alignItems={'center'}>
@@ -115,7 +115,7 @@ const ModifyApplication = () => {
                 </Stack>
               </FormControl>
             </Flex>
-            <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">{applicationByCode?.applicationReason}Daha önce oluşturduğunuz başvurunuzu başvuru kodu ile sorgulayabilirsiniz.</h3>
+            <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">{applicationByCode?.applicationReason}</h3>
            
           </div>
         </CardBody>
@@ -126,7 +126,7 @@ const ModifyApplication = () => {
       </Flex>
       <Card p={{ base: "4" }} m={{ base: "4" }} bg={answersBg} borderLeft={'4px'} borderColor="purple.500">
         <CardBody >
-          <Flex flexDirection={'column'} className="flex-row inset-x-0 max-w-full" gap={'4'}>
+          <Flex flexDirection={'column'} className="flex-row inset-x-0 w-full" gap={'4'}>
             {applicationByCode?.answers.map((answer, index) => (
               <Flex alignItems={'center'} borderRadius={'4'} key={index} gap={4}>
                 <Avatar size={'xs'}/>

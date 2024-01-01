@@ -43,8 +43,8 @@ const ViewApplication = () => {
     <Container maxW={'4xl'}>
     <Card p={{ base: "4" }} m={{ base: "4" }}>
         <CardBody display={"flex"} w={"full"} >
-          <div className="inset-x-0 max-w-full">
-            <h1 className="flex text-lg md:text-xl lg:text-2xl text-neutal-400 font-bold justify-start">{applicationByCode?.applicationReason}</h1>
+          <div className="inset-x-0 w-full">
+            <h1 className="flex text-lg md:text-xl lg:text-2xl text-neutal-400 font-bold justify-start">{`${applicationByCode?.applicationReason.slice(0, 20)}...`}</h1>
             <Flex mt={{ base: "none", md: "4", lg: "4" }} justifyContent={'space-between'} align="center">
               <Flex alignItems={'center'}>
                   <Avatar size="sm" src="avatar.jpg" />
@@ -55,7 +55,7 @@ const ViewApplication = () => {
               </Flex>
               {applicationByCode?.status && <CustomBadge status={applicationByCode?.status}/>}
             </Flex>
-            <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">{applicationByCode?.applicationReason}Daha önce oluşturduğunuz başvurunuzu başvuru kodu ile sorgulayabilirsiniz.</h3>
+            <h3 className="flex text-md md:text-lg lg:text-xl text-neutal-400 justify-start my-4">{applicationByCode?.applicationReason}</h3>
            
           </div>
         </CardBody>
