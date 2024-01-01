@@ -41,6 +41,7 @@ export default function Navbar(props: {
         minH="50px"
         justifyContent={{ xl: 'start' }}
         lineHeight="27.6px"
+        mx="auto"
         mt={secondaryMargin}
         pb="12px"
         pt="6px"

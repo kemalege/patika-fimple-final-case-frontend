@@ -11,7 +11,6 @@ const PendingApplicationList = () => {
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const pendingApplicationList = useSelector(selectPendingApplications)
-  console.log(pendingApplicationList,'pendingApplicationList');
 
   useEffect(() => {
     dispatch(setActiveTab("Admin", "Bekleyen Başvurular"));

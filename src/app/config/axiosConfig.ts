@@ -1,7 +1,8 @@
+import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://patika-fimple-final-case-backend.vercel.app',
+  baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -24,5 +25,24 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (error) {
+    const toast = useToast()
+    if (error.response && error.response.status === 401) {
+      window.location.href = '/admin';
+      toast({
+        title: 'Oturum süresi doldu.',
+        status: 'warning',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+  }
+);
+
 
 export default instance;

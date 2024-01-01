@@ -30,7 +30,7 @@ export interface IError {
 export interface Application {
   [key: string]: any;
   _id: string;
-  status: string;
+  status: applicationStatus;
   firstName: string;
   lastName: string;
   age: number;
@@ -73,5 +73,11 @@ export interface userResponse {
     _id: string
     userName: string
     role: string
+  }
+
+  export enum applicationStatus {
+    Pending = 'pending',
+    Rejected = 'rejected',
+    Solved = 'solved'
   }
   

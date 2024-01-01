@@ -46,6 +46,17 @@ export const getApplicationByCode = createAsyncThunk(
   }
 );
 
+export const getApplicationById = createAsyncThunk(
+  'application/getApplicationById',
+  async ({id}:{id:string}, {rejectWithValue}) => {
+    return await axios.get<ApiResponse<Application>>(`application/${id}`)
+    .then(response => response.data)
+      .catch(error => {
+        return rejectWithValue(error.response.data)
+      });
+  }
+);
+
 // ----------------- Apply To New Application -----------------
 export const applyToNewApplication = createAsyncThunk(
   'application/apply',
@@ -59,22 +70,24 @@ export const applyToNewApplication = createAsyncThunk(
 // ----------------- Add Answer To Application -----------------
 export const addAnswerToApplication = createAsyncThunk(
   'application/addAnswerToApplication',
-  async (answer, id) => {
-    const response = await axios.post<ApiResponse<Application>>(`application/answerApply/${id}`, answer);
-    return {
-      data: response.data,
-    };
+  async ({id, answerObj}:{id:string, answerObj:{answer: string}}, {rejectWithValue}) => {
+    return await axios.post<ApiResponse<Application>>(`application/answerApply/${id}`, answerObj)
+    .then(response => response.data)
+      .catch(error => {
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
-// ----------------- Add Answer To Application -----------------
+// ----------------- Adjust Application Status -----------------
 export const adjustApplicationStatus = createAsyncThunk(
-  'application/adjustApplicationStatus',
-  async (id) => {
-    const response = await axios.post<ApiResponse<Application>>(`application/adjustStatus/${id}`);
-    return {
-      data: response.data,
-    };
+  'application/adjustStatus',
+  async ({id, statusObj}:{id:string, statusObj:{status: string}}, {rejectWithValue}) => {
+    return await axios.post<ApiResponse<Application>>(`application/adjustStatus/${id}`, statusObj)
+    .then(response => response.data)
+      .catch(error => {
+        return rejectWithValue(error.response.data);
+      });
   }
 );
 
@@ -121,6 +134,19 @@ const applicationSlice = createSlice({
         state.applicationByCodeStatus = 'failed';
         state.applicationByCodeError = action.payload as IError;
       })
+      // ----------------- Get Application By Id  -----------------
+      // .addCase(getApplicationByCode.pending, (state) => {
+      //   state.applicationByCodeStatus = 'loading';
+      // })
+      // .addCase(getApplicationByCode.fulfilled, (state, action) => {
+      //   state.applicationByCodeStatus = 'success';
+      //   const { data } = action.payload;
+      //   state.applicationByCode = data
+      // })
+      // .addCase(getApplicationByCode.rejected, (state, action) => {
+      //   state.applicationByCodeStatus = 'failed';
+      //   state.applicationByCodeError = action.payload as IError;
+      // })
        // ----------------- Add Answer to Application  -----------------
       .addCase(addAnswerToApplication.pending, (state) => {
         state.addAnswerToApplicationStatus = 'loading';
@@ -128,16 +154,14 @@ const applicationSlice = createSlice({
       .addCase(addAnswerToApplication.fulfilled, (state, action) => {
         state.addAnswerToApplicationStatus = 'success';
         const { data } = action.payload;
-        state.addAnswerToApplication = data.data;
+        state.addAnswerToApplication = data
       })
        // ----------------- Adjust Application Status  -----------------
        .addCase(adjustApplicationStatus.pending, (state) => {
         state.adjustApplicationStatusStatus = 'loading';
       })
-      .addCase(adjustApplicationStatus.fulfilled, (state, action) => {
+      .addCase(adjustApplicationStatus.fulfilled, (state) => {
         state.adjustApplicationStatusStatus = 'success';
-        const { data } = action.payload;
-        state.addAnswerToApplication = data.data;
       })
   },
 });

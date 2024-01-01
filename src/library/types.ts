@@ -25,3 +25,9 @@ export type TSearchApplicationByCode = z.infer<typeof searchApplicationByCode>
 export const searchApplicationByCode = z.object({
     code: z.string().trim().min(1, { message: "Lütfen bir kod giriniz" }) ,
 })
+
+export type TAddNewAnswerToApplication = z.infer<typeof addNewAnswerToApplication>
+
+export const addNewAnswerToApplication = z.object({
+    newAnswer: z.string().trim().min(1, { message: "Boş cevap girilemez" }) ,
+})
