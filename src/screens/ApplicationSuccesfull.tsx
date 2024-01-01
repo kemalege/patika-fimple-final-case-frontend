@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../features/navigation/navigationSlice";
-import { Alert, AlertIcon, Box, Card, CardBody, CardHeader, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Alert, AlertIcon, Box, Card, CardBody, CardHeader, Flex, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { getApplicationByCode, selectNewApplication } from "../features/application/applicationSlice";
 import { useAppDispatch } from "../app/store";
 import { formatDateTime } from "../utils/DateTimeFormatter";
@@ -36,6 +36,9 @@ const ApplicationSuccesfull = () => {
       </CardHeader>
 
       <CardBody>
+        <Flex>
+          
+        </Flex>
         <Stack divider={<StackDivider />} spacing="4">
           <Box>
             <Heading size="xs">
@@ -69,6 +72,24 @@ const ApplicationSuccesfull = () => {
               {applicationData?.code}
             </Text>
           </Box>
+          <Box>
+            <Heading size="xs" >
+              Yaş
+            </Heading>
+            <Text pt="2" fontSize="sm">
+              {applicationData?.age}
+            </Text>
+          </Box>
+          
+          <Box>
+            <Heading size="xs" >
+              TC Kimlik Numarası
+            </Heading>
+            <Text pt="2" fontSize="sm">
+              {applicationData?.identity}
+            </Text>
+          </Box>
+          
         </Stack>
       </CardBody>
     </Card>

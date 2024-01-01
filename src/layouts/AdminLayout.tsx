@@ -6,7 +6,7 @@ import {
   selectActiveSubTab,
   selectActiveTab,
 } from "../features/navigation/navigationSlice";
-import Sidebar from "../components/sidebar/Sidebar";
+import AdminSidebar from "../components/sidebar/AdminSidebar";
 
 const AdminLayout = () => {
   const activeTab = useSelector(selectActiveTab);
@@ -21,7 +21,7 @@ const AdminLayout = () => {
           activeSubTab={activeSubTab}
         />
         <Flex flexDir={{ base: "column", md: "row" }}>
-          <Sidebar />
+          <AdminSidebar />
           <Box flex="1">
             <Outlet />
           </Box>
