@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../features/navigation/navigationSlice";
 import { Alert, AlertIcon, Box, Card, CardBody, CardHeader, Flex, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
