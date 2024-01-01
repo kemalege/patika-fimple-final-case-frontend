@@ -1,9 +1,11 @@
 import { useColorMode } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
+import { PiSunFill } from 'react-icons/pi';
+import { HiMoon } from 'react-icons/hi';
 
 const ThemeSwitcher = () => {
-  const { toggleColorMode } = useColorMode()
 
+  const { colorMode, toggleColorMode } = useColorMode()
   const [theme, setTheme] = useState<string>("dark");
 
   useEffect(() => {
@@ -20,7 +22,10 @@ const ThemeSwitcher = () => {
     toggleColorMode()
   };
   return (
-    <button onClick={handleThemeSwitch}>Switch Theme</button> 
+    <button onClick={handleThemeSwitch}>
+       {colorMode === 'light' ? <HiMoon className="text-xl text-gray-800 transition-opacity duration-500"/> :
+            <PiSunFill className="text-xl text-gray-300 transition-opacity duration-500"/>}
+    </button> 
   )
 }
 

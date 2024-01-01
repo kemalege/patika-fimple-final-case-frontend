@@ -1,6 +1,6 @@
 import { getApplicationByCode, selectApplicationByCode, selectApplicationByCodeError, selectApplicationByCodeStatus } from '../features/application/applicationSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Card, CardBody, Container, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, Card, CardBody, Container, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react';
 import {formatDayAndMonth } from '../utils/DateTimeFormatter';
 import { CustomBadge } from '../components/ui/CustomBadge';
 import { setActiveTab } from '../features/navigation/navigationSlice';
@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import NoResult from '../components/NoResult';
 import { useAppDispatch } from '../app/store';
 import { useParams } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 const ViewApplication = () => {
 
@@ -38,7 +39,7 @@ const ViewApplication = () => {
   }, [])
 
   return (
-    searchByCodeRequestStatus=== 'loading' ? <p>Loading</p> : searchByCodeRequestStatus === 'failed' ? <NoResult message={searchErrorObject?.message ?? 'Bir hata oluştu'}/> : 
+    searchByCodeRequestStatus=== 'loading' ? <Loading /> : searchByCodeRequestStatus === 'failed' ? <NoResult message={searchErrorObject?.message ?? 'Bir hata oluştu'}/> : 
     <Container maxW={'4xl'}>
     <Card p={{ base: "4" }} m={{ base: "4" }}>
         <CardBody display={"flex"} w={"full"} >
@@ -66,14 +67,14 @@ const ViewApplication = () => {
       <Card p={{ base: "4" }} m={{ base: "4" }} bg={answersBg} borderLeft={'4px'} borderColor="purple.500">
         <CardBody >
           <Flex flexDirection={'column'} className="flex-row inset-x-0 max-w-full" gap={'4'}>
-            <Box borderRadius={'4'} p={{ base: "1"}}>
-              <p className="flex text-md md:text-lg lg:text-md text-neutal-400 justify-start ">Bu ornek bir cevap.</p>
-            </Box>
-            <Box borderRadius={'4'} p={{ base: "1"}}>
-              <p className="flex text-md md:text-lg lg:text-md text-neutal-400 justify-start ">Bu ornek bir cevap.</p>
-            </Box>
+            {applicationByCode?.answers.map((answer, index) => (
+              <Flex alignItems={'center'} borderRadius={'4'} key={index} gap={4}>
+                <Avatar size={'xs'}/>
+                <p className="flex text-md md:text-lg lg:text-md text-neutal-400 justify-start ">{answer}</p>
+              </Flex>
+            )
+            )}
           </Flex>
-          {applicationByCode?.answers.map((answer) => <span>{answer}</span>)}
         </CardBody>
       </Card>
     </Container>

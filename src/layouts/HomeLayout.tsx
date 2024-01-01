@@ -13,17 +13,18 @@ const HomeLayout = () => {
   const { onOpen } = useDisclosure();
   return (
     <>
-      <Flex flexDirection={{ base: "column", md: "column", lg: "column" }} >
-        <Box p={{ base: "16px", md: "24px" }}  >
-          <Flex flexDir={{ base: "column", md: "row" }} pt={{ base: "0px" }}>
-            <Navbar
-              onOpen={onOpen}
-              activeTab={activeTab}
-              activeSubTab={activeSubTab}
-            />
-          </Flex>
-        </Box>
-        <Outlet />
+      <Flex flexDirection={{ base: "column", md: "column", lg: "column" }} p={{ base: "16px", md: "24px" }} >
+        <Navbar
+          onOpen={onOpen}
+          activeTab={activeTab}
+          activeSubTab={activeSubTab}
+        />
+      
+        <Flex flexDir={{ base: "column", md: "row" }}>
+          <Box flex="1">
+            <Outlet />
+          </Box>
+        </Flex>
       </Flex>
     </>
   );

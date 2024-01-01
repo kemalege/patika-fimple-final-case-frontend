@@ -1,4 +1,3 @@
-import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -30,17 +29,12 @@ instance.interceptors.response.use(
   function (response) {
     return response;
   },
-  async function (error) {
-    const toast = useToast()
-    if (error.response && error.response.status === 401) {
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('userToken');
       window.location.href = '/admin';
-      toast({
-        title: 'Oturum süresi doldu.',
-        status: 'warning',
-        duration: 2000,
-        isClosable: true,
-      })
     }
+    return Promise.reject(error);
   }
 );
 

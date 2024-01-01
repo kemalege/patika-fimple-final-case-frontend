@@ -8,12 +8,13 @@ import ViewApplication from './screens/ViewApplication';
 import HomeLayout from './layouts/HomeLayout';
 import RequireAuth from './layouts/RequireAuth';
 import { LoginAdmin } from './screens/LoginAdmin';
-import ThemeSwitcher from './components/ThemeSwitcher';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout/>,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: "/",
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RequireAuth />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: "/admin/basvuru-listesi",
@@ -60,10 +62,8 @@ const router = createBrowserRouter([
 
 const App = () => {
 
-  
   return (
     <>  
-        <ThemeSwitcher />
         <RouterProvider router={router} />
     </>
   )

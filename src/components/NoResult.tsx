@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, Container, Flex, Heading, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 

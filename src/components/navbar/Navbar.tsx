@@ -1,4 +1,5 @@
 import { Box, Breadcrumb, BreadcrumbItem, Text, Flex, useColorModeValue } from '@chakra-ui/react';
+import ThemeSwitcher from '../ThemeSwitcher';
 
 export default function Navbar(props: {
   secondary?: boolean;
@@ -97,6 +98,7 @@ export default function Navbar(props: {
             </Text>
           </Box>
         </Flex>
+        <ThemeSwitcher />
       </Box>
     </>
   );

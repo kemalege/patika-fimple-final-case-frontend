@@ -1,16 +1,18 @@
 import { addAnswerToApplication, adjustApplicationStatus, getApplicationByCode, selectApplicationByCode, selectApplicationByCodeError, selectApplicationByCodeStatus } from '../features/application/applicationSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Button, Card, CardBody, Container, Flex, FormControl, FormLabel, Heading, Input, Select, Stack, Text, useColorModeValue, useToast } from '@chakra-ui/react';
+import { Avatar, Box, Button, Card, CardBody, Container, Flex, FormControl, FormLabel, Heading, IconButton, Input, Select, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import {formatDayAndMonth } from '../utils/DateTimeFormatter';
 import { setActiveTab } from '../features/navigation/navigationSlice';
 import { TfiCommentAlt } from "react-icons/tfi";
 import { useEffect, useState } from 'react';
 import NoResult from '../components/NoResult';
 import { useAppDispatch } from '../app/store';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TAddNewAnswerToApplication, addNewAnswerToApplication } from '../library/types';
+import { MdArrowBackIos } from 'react-icons/md';
+import Loading from '../components/Loading';
 
 const ModifyApplication = () => {
 
@@ -23,9 +25,9 @@ const ModifyApplication = () => {
     resolver: zodResolver(addNewAnswerToApplication),
   });
 
-  const toast = useToast()
   const dispatch = useDispatch()
   const appDispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { basvuruNo } = useParams()
   const code = basvuruNo
   
@@ -67,23 +69,30 @@ const ModifyApplication = () => {
     const answerObj = {answer: data.newAnswer}
     try {
       if(applicationByCode?._id)
-      await appDispatch(addAnswerToApplication({ id: applicationByCode?._id, answerObj })).unwrap();
+        await appDispatch(addAnswerToApplication({ id: applicationByCode?._id, answerObj })).unwrap();
+      if(code)
+        await appDispatch(getApplicationByCode({ code })).unwrap();
     } catch (error: any) {
-       toast({
-          title: 'Oturum süresi doldu.',
-          status: 'warning',
-          duration: 2000,
-          isClosable: true,
-        })
-      // console.log(error);
+      console.log(error);
     }
     reset();
   }
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
-    searchByCodeRequestStatus=== 'loading' ? <p>Loading</p> : searchByCodeRequestStatus === 'failed' ? <NoResult message={searchErrorObject?.message ?? 'Bir hata oluştu'}/> : 
+    searchByCodeRequestStatus=== 'loading' ? <Loading/> : searchByCodeRequestStatus === 'failed' ? <NoResult message={searchErrorObject?.message ?? 'Bir hata oluştu'}/> : 
     <Container maxW={'4xl'}>
-    <Card p={{ base: "4" }} m={{ base: "4" }}>
+      <Box ml={4}>
+          <IconButton
+              icon={<MdArrowBackIos />}
+              aria-label="Go back"
+              onClick={handleGoBack}
+          />
+      </Box>
+      <Card p={{ base: "4" }} m={{ base: "4" }}>
         <CardBody display={"flex"} w={"full"} >
           <div className="inset-x-0 max-w-full">
             <h1 className="flex text-lg md:text-xl lg:text-2xl text-neutal-400 font-bold justify-start">{applicationByCode?.applicationReason}</h1>
@@ -119,9 +128,10 @@ const ModifyApplication = () => {
         <CardBody >
           <Flex flexDirection={'column'} className="flex-row inset-x-0 max-w-full" gap={'4'}>
             {applicationByCode?.answers.map((answer, index) => (
-              <Box borderRadius={'4'} key={index}>
+              <Flex alignItems={'center'} borderRadius={'4'} key={index} gap={4}>
+                <Avatar size={'xs'}/>
                 <p className="flex text-md md:text-lg lg:text-md text-neutal-400 justify-start ">{answer}</p>
-              </Box>
+              </Flex>
             )
             )}
           </Flex>
@@ -138,8 +148,8 @@ const ModifyApplication = () => {
               </Button>
             </Flex>
             {errors.newAnswer && (
-                        <p className="text-red-500">{`${errors.newAnswer.message}`}</p>
-                      )}
+              <p className="text-red-500">{`${errors.newAnswer.message}`}</p>
+            )}
           </FormControl>
         </form>
       </Card>

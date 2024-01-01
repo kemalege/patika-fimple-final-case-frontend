@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { setActiveTab } from "../features/navigation/navigationSlice";
-import { Alert, AlertIcon, Card, CardBody, CardHeader, CircularProgress, Heading, Spinner, Stack, StackDivider, Text } from "@chakra-ui/react";
-import { getApplicationByCode, selectApplicationByCode, selectApplicationByCodeStatus } from "../features/application/applicationSlice";
-import { useAppDispatch } from "../app/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Card, CardBody } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,11 +10,7 @@ import { TSearchApplicationByCode, searchApplicationByCode } from "../library/ty
 
 const CheckApplicationStatus = () => {
   const dispatch = useDispatch();
-  const appDispatch = useAppDispatch();
   
-  const searchByCodeRequestStatus = useSelector(selectApplicationByCodeStatus)
-  const applicationByCode = useSelector(selectApplicationByCode)
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,17 +49,7 @@ const CheckApplicationStatus = () => {
                       placeholder="Başvuru kodu giriniz"
                       className="flex justify-start w-fit py-3 pl-5 outline-none shadow-lg rounded-l-lg"/>
                       <button className="flex rounded-r-lg items-center justify-center w-16 bg-chakra-green-400 text-white shadow-lg">
-                        {searchByCodeRequestStatus === "loading" ? (
-                          <Spinner
-                            thickness='2px'
-                            speed='0.65s'
-                            emptyColor='gray.300'
-                            color='white'
-                            size='sm'
-                          />
-                        ) : (
-                          <IoSearch />
-                        )}
+                        <IoSearch />
                       </button>
                   </div>
                   {errors.code && (

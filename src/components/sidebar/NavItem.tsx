@@ -6,6 +6,7 @@ import {
     Box,
     useColorModeValue,
 } from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
 
 
 export interface NavItemProps {
@@ -27,6 +28,8 @@ export default function NavItem({ icon, title, active, onClick }: NavItemProps) 
             flexDir="column"
             w="100%"
         > 
+        <Link to="/admin/basvuru-listesi">
+
             <Box
                 onClick={onClick}
                 cursor="pointer"
@@ -41,6 +44,7 @@ export default function NavItem({ icon, title, active, onClick }: NavItemProps) 
                     <Text ml={5} >{title}</Text>
                 </Flex>
             </Box>
+        </Link>
        
         </Flex>
     )
