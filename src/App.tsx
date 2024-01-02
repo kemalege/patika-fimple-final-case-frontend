@@ -3,7 +3,7 @@ import NewApplication from './screens/NewApplication';
 import PendingApplicationList from './screens/PendingApplicationList';
 import ModifyApplication from './screens/ModifyApplication';
 import CheckApplicationStatus from './screens/CheckApplicationStatus';
-import ApplicationSuccesfull from './screens/ApplicationSuccesfull';
+import ApplicationSuccesful from './screens/ApplicationSuccesful';
 import ViewApplication from './screens/ViewApplication';
 import HomeLayout from './layouts/HomeLayout';
 import RequireAuth from './layouts/RequireAuth';
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/basvuru-basarili",
-        element: <ApplicationSuccesfull/>,
+        element: <ApplicationSuccesful/>,
       },
       {
         path: "/basvuru/:basvuruNo",

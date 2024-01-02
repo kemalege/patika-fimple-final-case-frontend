@@ -45,6 +45,10 @@ The following technologies are used in this project:
 - Chakra UI
 - Tailwind CSS
 
+## Production Link
+
+You can access the application in production at [Deployed App](https://patika-fimple-final-case-frontend-xy4d.vercel.app)
+
 ## Screenshots of the Application
 
 #### Admin login page
